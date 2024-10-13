@@ -166,8 +166,11 @@ papers |>
   select(paper,refs) |>
   unnest(refs) |>
   count(paper) |> View()
-  
-refs_id
+
+oa_fetch(
+  entity = "works",
+  id = refs_id$refs
+)
 
 ###
   View()
