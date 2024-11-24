@@ -4,6 +4,9 @@ pacman::p_load(
   readxl,
   writexl
 )
+source("short_names.R", local = T)
+
+###
 
 read_xlsx(
   "Scopus_essential.xlsx"
@@ -132,5 +135,8 @@ Z_matrix |>
   rownames_to_column(var = "Row") %>%
   pivot_longer(-Row, names_to = "Column", values_to = "z") %>%
   rename(i = Row, j = Column) |>
-    View()
+  abbreviations(i) |>
+  abbreviations(j) |>
+  mutate(z = ifelse(i==j,1,z)) |>
+  write_xlsx("Scopus_cosine_similarity.xlsx")
   

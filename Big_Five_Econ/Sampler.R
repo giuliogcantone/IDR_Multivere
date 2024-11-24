@@ -95,7 +95,7 @@ filter(!author %>% is.na(),
             publication_date = publication_date %>% as.Date(),
             pub_year = publication_year,
             counts_by_year,
-            concepts,
+            topics,
             refs = referenced_works
   ) %>%
   arrange(publication_date) %>%
@@ -112,7 +112,7 @@ papers %>%
   unnest(author) %>%
   rename(author = au_display_name) %>%
   filter(!author %>% is.na()) %>%
-  count(title) %>%
+  dplyr::count(title) %>%
   rename(n_authors = n) %>%
   right_join(papers) %>%
   mutate(n_authors_class =
@@ -145,11 +145,12 @@ papers |>
   distinct() |>
   right_join(papers) -> papers
 
+###
+
 papers %>%
-  unnest(concepts) %>%
-  filter(level == 0,
-         score>0) |>
-  select(-id,-wikidata,-level) |>
+  unnest(topics) %>%
+  filter(name == "field") |> View()
+  select(-id,i) |>
   rename_disc("i") |>
   select(paper) |>
   distinct() |>
@@ -170,7 +171,17 @@ papers |>
 oa_fetch(
   entity = "works",
   id = refs_id$refs
-)
+) -> refs
 
-###
-  View()
+### Authors
+
+papers |>
+  select(paper,author) |>
+  unnest(author) |>
+  pull(au_id) |>
+  unique() -> authorlist
+
+oa_fetch(
+  entity = "author",
+  id = authorlist
+) -> authorlist
