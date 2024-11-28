@@ -24,7 +24,7 @@ abbreviations <- function(x,i) {
           "Earth and Planetary Sciences" ~ "EarthSci",
           "Economics, Econometrics and Finance" ~ "Econom.",
           "Energy" ~ "PhysEnergy",
-          "Engineering" ~ "Egineer.",
+          "Engineering" ~ "Engineer.",
           "Environmental Science" ~ "EnvirSci",
           "Immunology and Microbiology" ~ "MicroBio",
           "Materials Science" ~ "MaterialSci",
@@ -38,7 +38,7 @@ abbreviations <- function(x,i) {
           "Social Sciences" ~ "SocialSci",
           "Veterinary" ~ "Veterin.",
           "Dentistry" ~ "Dentist.",
-          "Health Professions" ~ "HealthProfess"
+          "Health Professions" ~ "HealthPro"
         )
     )
 }

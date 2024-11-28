@@ -80,9 +80,9 @@ openalexR::oa_fetch(
       mutate(
         group = "Organisation"
       )
-  ) -> papers
+  ) -> papers_og
 
-papers |>
+papers_og |>
 filter(!author %>% is.na(),
            !publication_date %>% is.na(),
            !referenced_works %>% is.na(),
