@@ -42,3 +42,42 @@ abbreviations <- function(x,i) {
         )
     )
 }
+
+
+abbreviations_concepts <- function(x,i) {
+  column_sym <- ensym(i)
+  
+  x |>
+    mutate(
+      !!column_sym :=
+        case_match(
+          !!column_sym,
+          "Art" = "Art",
+          "Biology" = "Biol.",
+          "Business" = "Busin.",
+          "Chemistry" ~ "Chem.",
+          "Computer science" ~ "CompSci.",
+          "Economics" ~ "Econom.",
+          "Geography" ~ "Geogr.",
+          "Geology" = "Geolog.",
+          "History" = "Hist.",
+          "Mathematics" ~ "Math.",
+          "Materials science" ~ "MaterialSci.",
+          "Medicine" = "Medic.",
+          "Engineering" = "Eng",
+          "Environmental science" ~ "EnvirSci.",
+          "Philosophy" ~ "Phil.",
+          "Physics" = "Phys.",
+          "Political science" ~ "LawPol",
+          "Psychology" ~ "Psych.",
+          "Sociology" ~ "Sociol.",
+        )
+    )
+}
+
+openalexR::oa_fetch(
+  entity = "concepts",
+  level = 0
+) -> a
+
+a$display_name

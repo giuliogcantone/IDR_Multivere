@@ -4,7 +4,7 @@ pacman::p_load(
 source("IDR_17_measures.R")
 source("short_names.R")
 
-### Semantic IDR
+### Topics Semantic IDR
 papers %>%
   unnest(topics) |>
   filter(name == "field") |>
@@ -20,7 +20,29 @@ papers %>%
     p = sum(p) |> round(5)
   ) |>
   abbreviations(i) |>
-  IDR17("sem") %>%
+  IDR17("Topics_sem") %>%
+  left_join(
+    papers,.
+  ) -> papers
+
+
+papers_og %>%
+  transmute(paper = id, concepts) |>
+  unnest(concepts) |>
+  filter(level == 0) |> View()
+  select(-id,-i,-name) |>
+  rename(i = display_name) |>
+  mutate(
+    p = score/sum(score),
+    .by = paper
+  ) |>
+  select(paper,i,p) |>
+  summarise(
+    .by = c(paper,i),
+    p = sum(p) |> round(5)
+  ) |>
+  abbreviations(i) |>
+  IDR17("Concepts_sem") %>%
   left_join(
     papers,.
   ) -> papers
